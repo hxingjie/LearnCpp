@@ -92,9 +92,34 @@ int main() {
 
 ```c++
 // static.cpp
+// like use private
 static int var = 5; // 只属于该.obj文件
 
 static void TestFunc() { // 只属于该.obj文件
 
 }
 ```
+
+## 类内的 static
+```c++
+#include <iostream>
+class Entity {
+public:
+	static int x, y;
+	static void Print() {
+		// static 方法不包含 this 指针，所以不能访问到非静态变量
+		std::cout << x << ", " << y << std::endl;
+	}
+};
+int Entity::x;
+int Entity::y = 20;
+int main() {
+	Entity::x = 10;
+	//Entity::y = 20;
+	Entity::Print();
+	
+	return 0;
+}
+```
+
+
