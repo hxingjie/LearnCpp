@@ -122,4 +122,67 @@ int main() {
 }
 ```
 
+## Local Static Var
+```c++
+#include <iostream>
+
+void Func() {
+	static int s_var = 0; // 生命周期是整个程序的生命周期，作用范围是所在作用域
+	std::cout << s_var << std::endl;
+	s_var += 1;
+}
+
+int main() {
+	Func();// 0
+	Func();// 1
+	Func();// 2
+	Func();// 3
+	
+	return 0;
+}
+```
+
+### 单例模式 use static
+```c++
+#include <iostream>
+
+class Singleton {
+public:
+	static Singleton& Get() {
+		static Singleton instance;
+		return instance;
+	}
+	void Hello() {
+		std::cout << "hello, world." << std::endl;
+	}
+};
+
+int main() {
+	Singleton::Get().Hello();
+	return 0;
+}
+```
+
+### 单例模式 no static
+```c++
+#include <iostream>
+
+class Singleton {
+private:
+	static Singleton* s_Instance;
+public:
+	static Singleton& Get() {
+		return *s_Instance;
+	}
+	void Hello() {
+		std::cout << "hello, world." << std::endl;
+	}
+};
+Singleton* Singleton::s_Instance = nullptr;
+
+int main() {
+	Singleton::Get().Hello();
+	return 0;
+}
+```
 
