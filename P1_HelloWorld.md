@@ -127,33 +127,3 @@ int main() {
 }
 ```
 
-## 类 base
-```c++
-#include <iostream>
-
-#define Print(x) std::cout << x << std::endl
-
-class Player {
-public:
-	int x, y;
-	int speed;
-
-	void Move(int xa, int ya) {
-		x += xa * speed;
-		y += ya * speed;
-	}
-};
-
-int main() {
-	Player player;
-	player.x = 0;
-	player.y = 0;
-	player.speed = 2;
-	player.Move(1, -1);
-
-	Print(player.x);
-	Print(player.y);
-
-	return 0;
-}
-```
