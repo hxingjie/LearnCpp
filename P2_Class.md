@@ -37,36 +37,36 @@ int main() {
 
 class Log {
 public:
-	const int LogLevelError = 0;
-	const int LogLevelWarning = 1;
-	const int LogLevelInfo = 2;
+	enum Level : short {
+		LevelError, LevelWarning, LevelInfo
+	};
 private:
-	int m_LogLevel = LogLevelInfo;
+	Level m_LogLevel = LevelInfo;
 
 public:
-	void SetLevel(int level) {
+	void SetLevel(Level level) {
 		m_LogLevel = level;
 	}
 
 	void Error(const char* message) {
-		if (m_LogLevel >= LogLevelError)
+		if (m_LogLevel >= LevelError)
 			std::cout << "[Error]: " << message << std::endl;
 	}
 
 	void Warn(const char* message) {
-		if (m_LogLevel >= LogLevelWarning)
+		if (m_LogLevel >= LevelWarning)
 			std::cout << "[Warning]: " << message << std::endl;
 	}
 
 	void Info(const char* message) {
-		if (m_LogLevel >= LogLevelInfo)
+		if (m_LogLevel >= LevelInfo)
 			std::cout << "[Info]: " << message << std::endl;
 	}
 };
 
 int main() {
 	Log log;
-	log.SetLevel(log.LogLevelWarning);
+	log.SetLevel(Log::LevelWarning);
 	log.Error("hello!");
 	log.Warn("hello!");
 	log.Info("hello!");
@@ -186,51 +186,7 @@ int main() {
 }
 ```
 
-## 使用 Enum 改进 Log 类
-```c++
-#include <iostream>
-
-class Log {
-public:
-	enum Level : short {
-		LevelError, LevelWarning, LevelInfo
-	};
-private:
-	Level m_LogLevel = LevelInfo;
-
-public:
-	void SetLevel(Level level) {
-		m_LogLevel = level;
-	}
-
-	void Error(const char* message) {
-		if (m_LogLevel >= LevelError)
-			std::cout << "[Error]: " << message << std::endl;
-	}
-
-	void Warn(const char* message) {
-		if (m_LogLevel >= LevelWarning)
-			std::cout << "[Warning]: " << message << std::endl;
-	}
-
-	void Info(const char* message) {
-		if (m_LogLevel >= LevelInfo)
-			std::cout << "[Info]: " << message << std::endl;
-	}
-};
-
-int main() {
-	Log log;
-	log.SetLevel(Log::LevelWarning);
-	log.Error("hello!");
-	log.Warn("hello!");
-	log.Info("hello!");
-
-	return 0;
-}
-```
-
-## 构造函数
+## 构造函数，析构函数
 ```c+++
 #include <iostream>
 
@@ -246,6 +202,10 @@ public:
 	Entity(float x, float y) {
 		this->x = x;
 		this->y = y;
+	}
+
+	~Entity() {
+		std::cout << "Destroy" << std::endl;
 	}
 
 	void Print() {
@@ -264,7 +224,7 @@ public:
 	Log() = delete;
 	static void Print() {
 
-	}
+	}1234567890-=0-98 
 };
 
 int main() {
@@ -277,3 +237,141 @@ int main() {
 	return 0;
 }
 ```
+
+## 继承
+```c++
+#include <iostream>
+
+class Entity {
+public:
+	float x, y;
+	void Move(float xa, float ya) {
+		x += xa;
+		y += ya;
+	}
+	void PrintPos() {
+		std::cout << x << ", " << y << std::endl;
+	}
+};
+
+class Player : public Entity {
+public:
+	const char* name;
+	void PrintName() {
+		std::cout << name << std::endl;
+	}
+};
+
+int main() {
+	Player player;
+	player.name = "Player_0";
+	player.x = 0;
+	player.y = 0;
+	player.Move(1, -1);
+	player.PrintPos();
+	player.PrintName();
+
+	return 0;
+}
+```
+
+## 虚函数
+虚函数引入的额外开销：
+	空间：虚函数表指针，虚函数表
+	时间：遍历虚函数表
+```c++
+#include <iostream>
+#include <string>
+
+class Entity {
+public:
+	virtual std::string GetName() {
+		return "Entity";
+	}
+};
+
+class Player : public Entity {
+private:
+	std::string m_name;
+public:
+	Player(const std::string& name) 
+		: m_name(name) {
+
+	}
+	std::string GetName() override {
+		return m_name;
+	}
+};
+
+void Func(Entity* entity) {
+	std::cout << entity->GetName() << std::endl;
+}
+
+int main() {
+	Entity* e = new Entity();
+	Func(e);
+	Player* p = new Player("Player_0");
+	Func(p);
+
+	return 0;
+}
+```
+
+## 纯虚函数
+```c++
+#include <iostream>
+#include <string>
+
+class Printable {
+public:
+	virtual std::string GetClassName() = 0;
+};
+
+class Entity : public Printable {
+public:
+	std::string GetClassName() override {
+		return "Entity";
+	}
+};
+
+class Player : public Entity {
+private:
+	std::string m_name;
+public:
+	Player(const std::string& name) 
+		: m_name(name) {
+
+	}
+	std::string GetClassName() override {
+		return m_name;
+	}
+};
+
+class Tmp : public Printable {
+public:
+	std::string GetClassName() override {
+		return "Tmp";
+	}
+};
+
+void Print(Printable* obj) {
+	std::cout << obj->GetClassName() << std::endl;
+}
+
+int main() {
+	Entity* e = new Entity();
+	Print(e);
+	Player* p = new Player("Player_0");
+	Print(p);
+
+	Tmp* tmp = new Tmp();
+	Print(tmp);
+
+	return 0;
+}
+```
+
+## 访问修饰符
+private: 类内部
+protected: 类内部，子类内部
+public: 类内部，子类内部，类外部
