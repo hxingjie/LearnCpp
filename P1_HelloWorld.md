@@ -136,8 +136,8 @@ enum MyEnum : short {
 };
 
 int main() {
-	MyEnum e = MyEnum::var_a;
-	if (e == MyEnum::var_a) {
+	MyEnum e = var_a;
+	if (e == var_a) {
 		std::cout << "It's var_a!" << std::endl;
 	}
 	return 0;
