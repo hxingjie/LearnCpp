@@ -105,4 +105,55 @@ int main(){
 }
 ```
 
-## 
+## 指针
+```c++
+#include <iostream>
+#define Print(x) std::cout << x << std::endl
+
+int main() {
+	int var = 8;
+	int* ptr = &var;
+	Print(var);
+
+	*ptr = 10;
+	Print(var);
+
+    short* buffer = new short[8];
+	memset(buffer, 255, sizeof(short)*8); // memset 是操作字节的
+	short** ptr_buffer = &buffer;
+	delete[] buffer;
+
+	return 0;
+}
+```
+
+## 类 base
+```c++
+#include <iostream>
+
+#define Print(x) std::cout << x << std::endl
+
+class Player {
+public:
+	int x, y;
+	int speed;
+
+	void Move(int xa, int ya) {
+		x += xa * speed;
+		y += ya * speed;
+	}
+};
+
+int main() {
+	Player player;
+	player.x = 0;
+	player.y = 0;
+	player.speed = 2;
+	player.Move(1, -1);
+
+	Print(player.x);
+	Print(player.y);
+
+	return 0;
+}
+```
