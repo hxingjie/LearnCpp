@@ -192,7 +192,7 @@ int main() {
 
 class Log {
 public:
-	enum Level {
+	enum Level : short {
 		LevelError, LevelWarning, LevelInfo
 	};
 private:
@@ -225,6 +225,54 @@ int main() {
 	log.Error("hello!");
 	log.Warn("hello!");
 	log.Info("hello!");
+
+	return 0;
+}
+```
+
+## 构造函数
+```c+++
+#include <iostream>
+
+class Entity {
+public:
+	float x, y;
+
+	Entity() {
+		x = 0.0f;
+		y = 0.0f;
+	}
+
+	Entity(float x, float y) {
+		this->x = x;
+		this->y = y;
+	}
+
+	void Print() {
+		std::cout << x << ", " << y << std::endl;
+	}
+};
+
+class Log {
+// 删除构造函数1，设为私有化
+private:
+	Log() {
+
+	}
+public:
+	// 删除构造函数2，使用 delete
+	Log() = delete;
+	static void Print() {
+
+	}
+};
+
+int main() {
+	Entity e0;
+	e0.Print();
+
+	Entity e1(0, 1);
+	e1.Print();
 
 	return 0;
 }
