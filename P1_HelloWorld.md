@@ -127,3 +127,19 @@ int main() {
 }
 ```
 
+## Enum
+```c++
+#include <iostream>
+
+enum MyEnum : short {
+	var_a, var_b, var_c
+};
+
+int main() {
+	MyEnum e = MyEnum::var_a;
+	if (e == MyEnum::var_a) {
+		std::cout << "It's var_a!" << std::endl;
+	}
+	return 0;
+}
+```
