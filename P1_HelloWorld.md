@@ -143,3 +143,41 @@ int main() {
 	return 0;
 }
 ```
+
+## Array
+
+### stack 创建数组
+```c++
+#include <iostream>
+int main() {
+	int nums[4];
+	//const int size = 4;
+	//int nums[size];
+	for (int i = 0; i < 4; i++) {
+		nums[i] = 0;
+	}
+
+	int* ptr = nums;
+	nums[2] = 2;
+	*(ptr + 2) += 1;
+	*(int*)((char*)ptr + 8) += 1;
+
+	return 0;
+}
+```
+
+### heap 创建数组
+```c++
+#include <iostream>
+int main() {
+	const int size = 4;
+	int* nums = new int[size];
+	for (int i = 0; i < size; i++) {
+		nums[i] = 0;
+	}
+	delete[] nums;
+
+	return 0;
+}
+```
+
