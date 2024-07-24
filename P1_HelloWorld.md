@@ -181,3 +181,77 @@ int main() {
 }
 ```
 
+## string
+
+### c string
+```c++
+#include <iostream>
+int main() {
+	// "hello, world." is const char array
+
+	// const char*
+	const char* c_str = "hello, world.";
+
+	int size = strlen(c_str); // 不包括 '\0'
+
+	char c_array[14];
+	strcpy(c_array, c_str);
+
+	// char c_array[]
+	char c_array[14] = { 'h', 'e', 'l', 'l', 'o', ',', ' ', 'w', 'o', 'r', 'l', 'd', '.', '\0' };
+	char c_array[14] = "hello, world.";
+	c_array[0] = 'a';
+
+	// other type
+	const char* c_str_8 = u8"hello, world.";
+	const wchar_t* c_str_w = L"hello, world.";
+	const char16_t* c_str_16 = u"hello, world.";
+	const char32_t* c_str_32 = U"hello, world.";
+
+	// more lines
+	const char* str = "hello\n"
+		"world\n"
+		"hello\n"
+		"cpp\n";
+
+	return 0;
+}
+```
+
+### c++ string
+```c++
+#include <iostream>
+#include <string>
+
+void PrintStr(const std::string& str) {
+	std::cout << str << std::endl;
+}
+
+int main() {
+	std::string str = "hello, world.";
+	std::cout << str << std::endl;
+	PrintStr(str);
+
+	// some api
+	int size = str.size();
+	bool b = str.find("or") != std::string::npos;
+	str.push_back('a');
+	str.pop_back();
+
+	// 拼接字符串
+	str += "hello, cpp."; // += 被重载了
+	// 不能 "hello, world." + "hello, cpp."
+	// 因为 "hello, world." 和 "hello, cpp." 都是 const char array
+
+	// more lines
+	std::string str = "hello\n"
+		"world\n"
+		"hello\n"
+		"cpp\n";
+
+	return 0;
+}
+```
+
+## const
+
