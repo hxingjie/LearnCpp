@@ -78,6 +78,15 @@ int main() {
 ## 类外的 static
 ```c++
 // static.cpp
+// like use private
+static int var = 5; // 只属于该.obj文件
+static void TestFunc() { // 只属于该.obj文件
+
+}
+```
+
+```c++
+// static.cpp
 int var = 5;
 ```
 ```c++
@@ -90,28 +99,18 @@ int main() {
 }
 ```
 
-```c++
-// static.cpp
-// like use private
-static int var = 5; // 只属于该.obj文件
-
-static void TestFunc() { // 只属于该.obj文件
-
-}
-```
-
 ## 类内的 static
 ```c++
 #include <iostream>
 class Entity {
 public:
-	static int x, y;
-	static void Print() {
+	static int x, y; // 表示该变量属于类，而不属于实例
+	static void Print() { // 表示该方法属于类，而不属于实例
 		// static 方法不包含 this 指针，所以不能访问到非静态变量
 		std::cout << x << ", " << y << std::endl;
 	}
 };
-int Entity::x;
+int Entity::x; // 必须声明或赋值
 int Entity::y = 20;
 int main() {
 	Entity::x = 10;
@@ -127,7 +126,7 @@ int main() {
 #include <iostream>
 
 void Func() {
-	static int s_var = 0; // 生命周期是整个程序的生命周期，作用范围是所在作用域
+	static int s_var = 0; // 表示该遍历的生命周期是整个程序的生命周期，作用范围是所在作用域
 	std::cout << s_var << std::endl;
 	s_var += 1;
 }
