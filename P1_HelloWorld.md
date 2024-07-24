@@ -118,7 +118,7 @@ int main() {
 	*ptr = 10;
 	Print(var);
 
-    short* buffer = new short[8];
+    	short* buffer = new short[8];
 	memset(buffer, 255, sizeof(short)*8); // memset 是操作字节的
 	short** ptr_buffer = &buffer;
 	delete[] buffer;
@@ -254,4 +254,32 @@ int main() {
 ```
 
 ## const
+```c++
+// 1.定义常量
+const float PI = 3.14f;
 
+// 2.约束指针
+const int* ptr = new int; // 不能修改指针指向的内存的值
+int* const ptr = new int; // 不能修改指针的指向
+const int* const ptr = new int;
+
+// 3.in class
+class Entity {
+private:
+	int m_x, m_y;
+	mutable int var; // 允许在const函数中修改该变量
+public:
+	int GetX() const { // 约束该函数只读
+		var = 0;
+		return m_x;
+	}
+	void SetX(int x) {
+		m_x = x;
+	}
+};
+
+void PrintFunc(const Entity& entity) {
+	// 声明了const，就不能调用非const函数
+	// entity.SetX(1);
+}
+```
