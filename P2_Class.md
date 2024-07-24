@@ -31,6 +31,44 @@ int main() {
 }
 ```
 
+## 实例化类的两种方式
+```c++
+#include <iostream>
+#include <string>
+
+class Entity {
+private:
+	std::string m_name;
+public:
+	Entity()
+		: m_name("UnKnown") {
+
+	}
+	Entity(const std::string& name)
+		: m_name(name) {
+
+	}
+	const std::string& GetName() const {
+		return m_name;
+	}
+};
+
+int main() {
+	Entity entity_0;
+	Entity entity_1("Entity_1");
+
+	Entity* entity_2 = new Entity();
+	Entity* entity_3 = new Entity("Entity_3");
+
+	std::cout << entity_0.GetName() << std::endl;
+	std::cout << entity_1.GetName() << std::endl;
+	std::cout << entity_2->GetName() << std::endl;
+	std::cout << entity_3->GetName() << std::endl;
+
+	return 0;
+}
+```
+
 ## 简单日志类
 ```c++
 #include <iostream>
@@ -81,16 +119,21 @@ int main() {
 
 class Entity {
 public:
-	float x, y;
-
-	Entity() {
+	float x;
+	float y;
+	
+	// 如果变量是类类型，如果不在初始化列表初始化，就会自动先调用其无参构造函数，导致冗余调用构造函数
+	// 所以应该在初始化列表初始化变量
+	Entity()
+		: x(0.0f), y(0.0f) { // 初始化列表，顺序需要跟声明相同
 		x = 0.0f;
 		y = 0.0f;
 	}
 
-	Entity(float x, float y) {
-		this->x = x;
-		this->y = y;
+	Entity(float _x, float _y)
+		: : x(_x), y(_y) { // 初始化列表，顺序需要跟声明相同
+		//this->x = x;
+		//this->y = y;
 	}
 
 	~Entity() {
