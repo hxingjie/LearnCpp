@@ -65,7 +65,13 @@ int main() {
 	std::cout << entity_2->GetName() << std::endl;
 	std::cout << entity_3->GetName() << std::endl;
 
-	return 0;
+	delete entity_2;
+	delete entity_3;
+
+	// new -> delete
+	// new [] -> delete[]
+
+	return 0;78
 }
 ```
 
@@ -307,3 +313,52 @@ int main() {
 private: 类内部
 protected: 类内部，子类内部
 public: 类内部，子类内部，类外部
+
+## explicit
+不允许隐式转换调用构造函数
+
+## 操作符，操作符重载
+```c++
+#include <iostream>
+
+class Vector2 {
+public:
+	float x, y;
+	Vector2(float _x, float _y)
+		: x(_x), y(_y) {
+
+	}
+	Vector2 operator+(const Vector2& other) const {
+		return Vector2(x + other.x, y + other.y);
+	}
+	Vector2 operator*(const Vector2& other) const {
+		return Vector2(x * other.x, y * other.y);
+	}
+	bool operator==(const Vector2& other) const {
+		return x == other.x and y == other.y;
+	}
+	bool operator!=(const Vector2& other) const {
+		return ! (*this == other);
+	}
+};
+
+std::ostream& operator<<(std::ostream& stream, const Vector2& other) {
+	stream << other.x << ", " << other.y;
+	return stream;
+}
+
+int main() {
+	Vector2 position(-1.0f, 1.0f);
+	Vector2 position1(-1.0f, 1.0f);
+	Vector2 position2(1.0f, 1.0f);
+	Vector2 speed(1.0f, 1.0f);
+	Vector2 powerup(1.0f, 2.0f);
+
+	Vector2 result = position + speed * powerup;
+	
+	std::cout << (position == position1) << std::endl;
+	std::cout << (position != position2) << std::endl;
+
+	return 0;
+}
+```
