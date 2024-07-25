@@ -154,5 +154,69 @@ int main() {
 }
 ```
 
-## 
+## 46. -> 运算符
 
+### 1.
+```c++
+int main() {
+	Entity entity;
+	Entity* ptr = &entity;
+	ptr->Print();
+	(*ptr).Print();
+	
+	return 0;
+}
+```
+
+### 2.重载->运算符
+```c++
+#include <iostream>
+
+class Entity {
+public:
+	int x;
+	void Print() const {
+		std::cout << "hello" << std::endl;
+	}
+};
+
+class ScopedPtr {
+private:
+	Entity* m_ptr;
+public:
+	ScopedPtr(Entity* entity)
+		: m_ptr(entity) {
+
+	}
+	~ScopedPtr() {
+		delete m_ptr;
+	}
+	Entity* operator->() {
+		return m_ptr;
+	}
+};
+
+int main() {
+	ScopedPtr ptr(new Entity());
+	ptr->Print();
+	
+	return 0;
+}
+```
+
+### 3.查看内存布局
+```c++
+#include <iostream>
+
+class Entity {
+public:
+	int x, y, z;
+};
+
+int main() {
+	std::cout << (int) & ((Entity*)nullptr)->y << std::endl; // 0
+	std::cout << (int) & ((Entity*)nullptr)->y << std::endl; // 4
+	std::cout << (int) & ((Entity*)nullptr)->y << std::endl; // 8
+	return 0;
+}
+```
