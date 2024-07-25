@@ -151,8 +151,10 @@ int main() {
 #include <iostream>
 int main() {
 	int nums[4];
-	//const int size = 4;
-	//int nums[size];
+
+	const int size = 4;
+	int nums[size];
+
 	for (int i = 0; i < 4; i++) {
 		nums[i] = 0;
 	}
@@ -170,8 +172,9 @@ int main() {
 ```c++
 #include <iostream>
 int main() {
-	const int size = 4;
+	int size = 4;
 	int* nums = new int[size];
+
 	for (int i = 0; i < size; i++) {
 		nums[i] = 0;
 	}
