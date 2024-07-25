@@ -105,7 +105,7 @@ int main(){
 }
 ```
 
-## 指针
+## 指针，内存
 ```c++
 #include <iostream>
 #define Print(x) std::cout << x << std::endl
@@ -123,6 +123,13 @@ int main() {
 	short** ptr_buffer = &buffer;
 	delete[] buffer;
 
+	int n = 4;
+	int* nums = new int[n] {0, 1, 2, 3};
+	int* nums_c = new int[n];
+	memcpy(nums_c, nums, n*sizeof(int));
+	delete[] nums;
+	delete[] nums_c;
+ 
 	return 0;
 }
 ```
