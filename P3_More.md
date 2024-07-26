@@ -538,3 +538,36 @@ int main() {
 	return 0;
 }
 ```
+
+## 65.排序
+```c++
+#include <iostream>
+#include <algorithm>
+#include <vector>
+
+bool cmp(const int& lhs, const int& rhs) {
+	return lhs < rhs;
+}
+
+int main() {
+	std::vector<int> nums = { 3, 5, 1, 4, 1 , 6};
+
+	// func
+	sort(nums.begin(), nums.end(), cmp);
+
+	// lambda
+	sort(nums.begin(), nums.end(), 
+		[](const int& lhs, const int& rhs) {
+			if (lhs == 1)
+				return false;
+			if (rhs == 1)
+				return true;
+			return lhs < rhs;
+		});
+
+	for (int num : nums)
+		std::cout << num << std::endl;
+
+	return 0;
+}
+```
