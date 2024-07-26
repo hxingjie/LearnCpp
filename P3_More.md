@@ -375,6 +375,11 @@ void PrintNums(const std::vector<int>& values, const std::function<float(int)>& 
 	}
 }
 
+float Print(int val) {
+	std::cout << val << std::endl;
+	return 3.14f;
+}
+
 int main() {
 	std::vector<int> values{ 1, 5, 4, 2, 3 };
 	int x = 10;
@@ -382,6 +387,8 @@ int main() {
 		std::cout << val << ", " << x << std::endl;
 		return 3.14f;
 	});
+
+	PrintNums(values, Print);
 
 	return 0;
 }
@@ -397,6 +404,31 @@ int main() {
 			return val > 3;
 		});
 	std::cout << *it << std::endl;
+
+	return 0;
+}
+```
+
+### 61.namespace
+```c++
+#include <iostream>
+#include <string>
+
+namespace apple {
+	void Print() {
+		std::cout << "Apple" << std::endl;
+	}
+}
+
+namespace orange {
+	void Print() {
+		std::cout << "Orange" << std::endl;
+	}
+}
+
+int main() {
+	apple::Print();
+	orange::Print();
 
 	return 0;
 }
