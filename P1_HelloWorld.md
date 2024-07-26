@@ -136,6 +136,33 @@ int main() {
 	return 0;
 }
 ```
+```c++
+#include <iostream>
+
+struct Entity {
+	int x, y;
+};
+
+int main() {
+	int numi = 6;
+	float numf = * (float*) & numi; // 拷贝内存
+	// 0100 0000 1100 0000 0000 0000 0000 0000
+	// 1.10.0 0000
+	std::cout << numf << std::endl;
+	
+	// 内存访问
+	Entity entity;
+	int* ptr = (int*) &entity;
+	ptr[0] = 6;
+	ptr[1] = 12;
+	std::cout << entity.x << ", " << entity.y << std::endl;
+
+	char* creazyPtr = (char*) &entity;
+	std::cout << *(int*)(creazyPtr + 4) << std::endl;
+
+	return 0;
+}
+```
 
 ## Enum
 ```c++
