@@ -34,6 +34,9 @@ g++ hello.cpp log.cpp
 
 ## 变量
 ```c++
+typedef long long ll;
+#define LOG(x) std::cout << x << std::endl
+
 char, short, int, long, long long
 unsigned int num;
 float num = 3.14f;
@@ -192,6 +195,23 @@ int main() {
 ```
 
 ## string
+
+### 声明
+```c++
+#include <iostream>
+
+int main() {
+	std::string str("hello,world");
+	std::string* hstr = new std::string("hello,world");
+
+	const char* cstr = "hello,world.";
+
+	char* carray = new char[13] { 'h', 'e', 'l', 'l', 'o', ',', 'w', 'o', 'r', 'l', 'd', '.'};
+	char carray[13] { 'h', 'e', 'l', 'l', 'o', ',', 'w', 'o', 'r', 'l', 'd', '.' };
+
+	return 0;
+}
+```
 
 ### c string
 ```c++
