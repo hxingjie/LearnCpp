@@ -433,3 +433,108 @@ int main() {
 	return 0;
 }
 ```
+
+## 62.thread
+```c++
+#include <iostream>
+#include <thread>
+
+static bool s_finished = false;
+
+void DoWork() {
+	using namespace std::literals::chrono_literals;
+
+	std::cout << "Start thread DoWork, id=" << std::this_thread::get_id() << std::endl;
+
+	while (!s_finished) {
+		std::cout << "Working..." << std::endl;
+		std::this_thread::sleep_for(1s); // using namespace std::literals::chrono_literals;
+	}
+
+}
+
+int main() {
+	std::cout << "Start thread id=" << std::this_thread::get_id() << std::endl;
+
+	std::thread worker(DoWork);
+
+	std::cin.get();
+	s_finished = true;
+
+	worker.join();
+	std::cout << "Finished" << std::endl;
+
+	std::cin.get();
+
+	return 0;
+}
+```
+
+## 63.计时
+```c++
+#include <iostream>
+#include <thread>
+#include <chrono>
+
+class Timer {
+public:
+	std::chrono::time_point<std::chrono::steady_clock> start, end;
+	std::chrono::duration<float> duration;
+	Timer() {
+		start = std::chrono::high_resolution_clock::now();
+	}
+	~Timer() {
+		end = std::chrono::high_resolution_clock::now();
+		duration = end - start;
+
+		float ms = duration.count() * 1000.0f;
+		std::cout << "Duration=" << ms << "ms" << std::endl;
+	}
+};
+
+void TestFunc() {
+	Timer timer;
+
+	for (int i = 0; i < 100; i++) {
+		std::cout << "hello, cpp." << std::endl;
+	}
+}
+
+int main() {
+	TestFunc();
+	return 0;
+}
+```
+
+## 64.二维数组
+```c++
+#include <iostream>
+
+int main() {
+	int** array2d = new int*[50];
+	for (int i = 0; i < 50; i++) {
+		array2d[i] = new int[50];
+	}
+	for (int i = 0; i < 50; i++) {
+		delete[] array2d[i];
+	}
+	delete[] array2d;
+
+	int*** array3d = new int**[50];
+	for (int i = 0; i < 50; i++) {
+		array3d[i] = new int*[50];
+		for (int j = 0; j < 50; j++) {
+			array3d[i][j] = new int[50];
+		}
+	}
+	for (int i = 0; i < 50; i++) {
+		for (int j = 0; j < 50; j++) {
+			delete[] array3d[i][j];
+		}
+		delete[] array3d[i];
+	}
+	delete[] array3d;
+
+	return 0;
+}
+```
