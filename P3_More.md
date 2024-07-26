@@ -220,3 +220,184 @@ int main() {
 	return 0;
 }
 ```
+
+## 47.Vector
+
+### 1.
+```c++
+#include <iostream>
+#include <vector>
+
+class Vertex {
+public:
+	int x, y, z;
+	Vertex() {
+
+	}
+	Vertex(int a, int b, int c)
+		: x(a), y(b), z(c) {
+
+	}
+};
+
+std::ostream& operator<<(std::ostream& stream, const Vertex& vertex) {
+	stream << vertex.x << ", " << vertex.y << ", " << vertex.z;
+	return stream;
+}
+
+void Func(const std::vector<Vertex>& vertices) {
+
+}
+
+int main() {
+	std::vector<Vertex> vertices;
+	vertices.push_back(Vertex(1, 2, 3));
+	vertices.push_back(Vertex(4, 5, 6));
+
+	for (int i = 0; i < vertices.size(); i++)
+		std::cout << vertices[i] << std::endl;
+
+	vertices.erase(vertices.begin() + 1);
+
+	for (Vertex& v : vertices)
+		std::cout << v << std::endl;
+
+	vertices.clear();
+	
+	return 0;
+}
+```
+
+### 2.
+```c++
+#include <iostream>
+#include <vector>
+
+class Vertex {
+public:
+	int x, y, z;
+	Vertex() {
+
+	}
+	Vertex(int a, int b, int c)
+		: x(a), y(b), z(c) {
+
+	}
+	Vertex(const Vertex& vertex)
+		: x(vertex.x), y(vertex.y), z(vertex.z) {
+		std::cout << "Copied" << std::endl;
+	}
+};
+
+std::ostream& operator<<(std::ostream& stream, const Vertex& vertex) {
+	stream << vertex.x << ", " << vertex.y << ", " << vertex.z;
+	return stream;
+}
+
+void Func(const std::vector<Vertex>& vertices) {
+
+}
+
+int main() {
+	std::vector<Vertex> vertices;
+	vertices.reserve(3); // 提前扩容
+	vertices.emplace_back(1, 2, 3); // 不需要调用拷贝构造函数
+	vertices.emplace_back(4, 5, 6);
+	vertices.emplace_back(7, 8, 9);
+	
+	return 0;
+}
+```
+
+## 53.Template
+
+### 1.function
+```c++
+template<typename T>
+void Print(T value) {
+	std::cout << value << std::endl;
+}
+```
+
+### 2.class
+```c++
+#include <iostream>
+#include <vector>
+
+template<typename T, int N>
+class Array {
+private:
+	T m_array[N];
+public:
+	int GetSize() const {
+		return N;
+	}
+};
+
+int main() {
+	const int n = 6;
+	Array<int, n> array;
+	std::cout << array.GetSize() << std::endl;
+	
+	return 0;
+}
+```
+
+## 55.宏
+```c++
+#include <iostream>
+
+#define PR_DEBUG 1
+
+#if PR_DEBUG == 1
+#define LOG(x) std::cout << x << std::endl
+#else
+#define LOG(x)
+#endif
+
+int main() {
+	LOG("Hello");
+
+	return 0;
+}
+```
+
+## 58.函数指针，lambda
+```c++
+#include <iostream>
+#include <vector>
+#include <functional>
+
+void PrintNums(const std::vector<int>& values, const std::function<float(int)>& func) {
+	for (int val : values) {
+		 float f = func(val);
+		 std::cout << f << std::endl;
+	}
+}
+
+int main() {
+	std::vector<int> values{ 1, 5, 4, 2, 3 };
+	int x = 10;
+	PrintNums(values, [&x](int val) -> float{ // x, &x, =, &
+		std::cout << val << ", " << x << std::endl;
+		return 3.14f;
+	});
+
+	return 0;
+}
+```
+```c++
+#include <iostream>
+#include <vector>
+
+int main() {
+	std::vector<int> values{ 1, 5, 4, 2, 3 };
+	std::vector<int>::iterator it = std::find_if(values.begin(), values.end(),
+		[](int val) -> bool {
+			return val > 3;
+		});
+	std::cout << *it << std::endl;
+
+	return 0;
+}
+```
