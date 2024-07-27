@@ -362,6 +362,70 @@ int main() {
 }
 ```
 
+## 虚构造函数
+```c++
+#include <iostream>
+
+class Base {
+public:
+    Base() {
+        std::cout << "Base Contructor" << std::endl;
+    }
+    virtual void Print() { // 虚函数，如果该函数需要在子类中重写
+        std::cout << "Base Print" << std::endl;
+    }
+    virtual ~Base() { // 虚构造函数，如果该类会被继承，必须有虚构造函数
+        std::cout << "Base Destructor" << std::endl;
+    }
+};
+
+class Derived : public Base {
+public:
+    Derived() {
+        std::cout << "Derived Contructor" << std::endl;
+    }
+    void Print() override {
+        std::cout << "Derived Print" << std::endl;
+    }
+    ~Derived() {
+        std::cout << "Derived Destructor" << std::endl;
+    }
+};
+
+class Derived_n : public Derived {
+public:
+    Derived_n() {
+        std::cout << "Derived_n Contructor" << std::endl;
+    }
+    void Print() override {
+        std::cout << "Derived_n Print" << std::endl;
+    }
+    ~Derived_n() {
+        std::cout << "Derived_n Destructor" << std::endl;
+    }
+};
+
+int main(){
+    Base* base = new Base();
+    base->Print();
+    delete base;
+
+    std::cout << "----------------------" << std::endl;
+
+    Base* derived = new Derived();
+    derived->Print();
+    delete derived;
+
+    std::cout << "----------------------" << std::endl;
+
+    Base* derived_n = new Derived_n();
+    derived_n->Print();
+    delete derived_n;
+    
+    return 0;
+}
+```
+
 ## 访问修饰符
 private: 类内部
 protected: 类内部，子类内部
