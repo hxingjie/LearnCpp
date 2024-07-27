@@ -473,7 +473,6 @@ int main() {
 ## 63.计时
 ```c++
 #include <iostream>
-#include <thread>
 #include <chrono>
 
 class Timer {
