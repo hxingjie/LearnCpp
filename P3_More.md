@@ -693,4 +693,28 @@ g++ pch.h
 g++ hello.cpp
 ```
 
-## 72.
+## 75.结构化绑定
+```c++
+#include <iostream>
+#include <tuple>
+#include <string>
+
+std::tuple<std::string, int> Create() {
+    return {"cpp", 6};
+}
+
+int main() {
+	auto [str, num] = Create();
+	std::cout << str << std::endl;
+
+	std::tuple<std::string, int> t = Create();
+    std::cout << std::get<0>(t) << std::endl;
+    
+	return 0;
+}
+```
+
+## 76.optional
+```c++
+
+```
