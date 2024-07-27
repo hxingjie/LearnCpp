@@ -606,3 +606,92 @@ int main() {
 	return 0;
 }
 ```
+
+## 69.强制转换
+### static_cast
+// 编译时类型转换
+```c++
+int main(){
+    float numf = 3.14;
+    int num = static_cast<int>(numf);
+    std::cout << num << std::endl;
+    
+    return 0;
+}
+```
+### dynamic_cast
+```c++
+// 运行时类型转换，用于多态，需要记录运行时类型信息
+int main(){
+    Base* derived = new Derived_n();
+    Base* derived_n = dynamic_cast<Derived_n*>(derived); 
+    if (derived_n) {
+        std::cout << "It's Derived_n" << std::endl;
+    } else {
+        std::cout << "It's not Derived_n" << std::endl;
+    }
+    
+    return 0;
+}
+```
+### reinterpret_cast
+```c++
+// 更改内存的解释方式
+int main(){
+    int num = 6;
+    float* ptr = reinterpret_cast<float*>(&num);
+    std::cout << *ptr << std::endl;
+    
+    return 0;
+}
+```
+### const_cast
+```c++
+// 绕过const
+int main(){
+    const int num = 6;
+    int* ptr = const_cast<int*>(&num);
+    *ptr = 10;
+
+    std::cout << *ptr << std::endl;
+    
+    return 0;
+}
+```
+
+## 72.预编译头文件
+```c++
+// pch.h
+
+#include <iostream>
+#include <vector>
+#include <string>
+#include <map>
+#include <set>
+#include <queue>
+#include <stack>
+#include <algorithm>
+#include <functional>
+#include <thread>
+#include <chrono>
+#include <deque>
+#include <unordered_map>
+#include <unordered_set>
+```
+```c++
+// pch.cpp
+#include <pch.h>
+```
+```c++
+// include <pch.h>
+
+int main() {
+	std::cout << "hello, cpp." << std::endl;
+	return 0;
+```
+```shell
+g++ pch.h
+g++ hello.cpp
+```
+
+## 72.
