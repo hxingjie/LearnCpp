@@ -714,7 +714,55 @@ int main() {
 }
 ```
 
-## 76.optional
+## c++ 17 新特性
+### optional
 ```c++
+#include <iostream>
+#include <optional>
+#include <string>
 
+bool isOK = false;;
+std::optional<std::string> ReadData() {
+    if (isOK) {
+        return std::string("hello, world.");
+    } else {
+        return {};   
+    }
+}
+
+int main() {
+	std::optional<std::string> data = ReadData();
+    if (data) {
+        std::string str = data.value();
+        std::cout << str << std::endl;
+    } else {
+        std::cout << "It's no OK." << std::endl;
+    }
+
+	return 0;
+}
 ```
+### variant
+```c++
+#include <iostream>
+#include <variant>
+#include <string>
+
+int main() {
+	std::variant<std::string, int, float> data;
+    
+    data = "hello, world.";
+    int idx = data.index(); // 0
+    std::cout << std::get<std::string>(data) << std::endl;
+
+    data = 6;
+    idx = data.index(); // 1
+    std::cout << std::get<int>(data) << std::endl;
+
+    data = 3.14f;
+    idx = data.index(); // 2
+    std::cout << std::get<float>(data) << std::endl;
+
+	return 0;
+}
+``` 
