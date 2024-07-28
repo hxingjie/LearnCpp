@@ -716,6 +716,7 @@ int main() {
 
 ## c++ 17 新特性
 ### optional
+表示 不存在的变量
 ```c++
 #include <iostream>
 #include <optional>
@@ -743,6 +744,7 @@ int main() {
 }
 ```
 ### variant
+用一个变量存储不同类型的数据
 ```c++
 #include <iostream>
 #include <variant>
