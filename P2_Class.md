@@ -177,6 +177,7 @@ int main() {
 ```
 
 ## 拷贝构造函数
+### 示例1
 ```c++
 #include <iostream>
 
@@ -227,6 +228,48 @@ int main() {
 
 	return 0;
 }
+```
+
+### 示例2
+```c++
+#include <iostream>
+#include <string>
+
+class Tmp {
+public:
+    Tmp() {
+        std::cout << "construct" << std::endl;
+    }
+    Tmp(const Tmp& other) {
+        std::cout << "copy construct" << std::endl;
+    }
+    ~Tmp() {
+        std::cout << "destruct" << std::endl;
+    }
+};
+
+Tmp Func(Tmp& tmp) {
+    Tmp t;
+    return t;
+}
+
+int main() {
+    Tmp tmp;
+    Tmp t_n = Func(tmp);
+
+	return 0;
+}
+
+/*
+construct Tmp tmp
+construct Tmp t
+copy construct return t
+destruct Tmp t delete
+copy construct Tmp t_n
+destruct return t delete
+destruct Tmp t_n
+destruct Tmp tmp
+*/
 ```
 
 ## 继承
