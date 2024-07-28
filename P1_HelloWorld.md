@@ -310,6 +310,29 @@ int main() {
 }
 ```
 
+## string_view
+```c++
+#include <iostream>
+#include <string>
+
+void PrintStr(std::string_view str) {
+    std::cout << str << std::endl;
+}
+
+int main() {
+    // std::string_view: 存储 const char *，和长度，不需要分配内存
+
+    const char* str = "hello, world.";
+    std::string_view firstStr(str, 5);
+    std::string_view secondStr(str+7, 5);
+
+    PrintStr(firstStr);
+    PrintStr(secondStr);
+
+	return 0;
+}
+```
+
 ## 类外的 static
 ```c++
 // static.cpp
