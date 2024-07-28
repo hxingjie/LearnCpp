@@ -404,18 +404,27 @@ int main() {
 #include <iostream>
 
 class Singleton {
+private:
+    float numf = 3.14f;
+    Singleton() { // 构造函数私有化，不允许外部实例化该类 
+        std::cout << "Construst" << std::endl;
+    }
 public:
-	static Singleton& Get() {
-		static Singleton instance;
-		return instance;
-	}
-	void Hello() {
-		std::cout << "hello, world." << std::endl;
-	}
+    Singleton(const Singleton& other) = delete;
+    static Singleton& GetInstance() {
+        static Singleton instance;
+        return instance;
+    }
+    void Func() {
+        std::cout << "Hello, World." << std::endl;
+        std::cout << "numf: " << numf << std::endl;
+    }
 };
 
 int main() {
-	Singleton::Get().Hello();
+    Singleton& instance = Singleton::GetInstance();
+    instance.Func();
+
 	return 0;
 }
 ```
