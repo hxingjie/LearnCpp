@@ -30,6 +30,8 @@ int main(){
 ```shell
 g++ hello.cpp log.cpp
 ./a.out
+
+g++ -std=c++17 hello.cpp
 ```
 
 ## 变量
