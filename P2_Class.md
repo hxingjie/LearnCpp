@@ -261,6 +261,7 @@ int main() {
 }
 
 /*
+g++ -fno-elide-constructors hello.cpp
 construct Tmp tmp
 construct Tmp t
 copy construct return t
