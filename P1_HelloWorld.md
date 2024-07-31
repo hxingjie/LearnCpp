@@ -50,6 +50,39 @@ sizeof(int): 4
 sizeof(num): 4 
 ```
 
+变量应该显式初始化
+
+声明与定义分开
+```c++
+// tmp.h
+extern int val;
+void func();
+
+// tmp.cpp
+#include <iostream>
+#include "tmp.h"
+
+int val = 10;
+void func() {
+    std::cout << val << std::endl;
+}
+
+// Main.cpp
+#include <iostream>
+#include "tmp.h"
+
+extern int val;
+
+int main() {
+    func();
+    std::cout << val << std::endl;
+    val = 15;
+    std::cout << val << std::endl;
+
+    return 0;
+}
+```
+
 ## head file
 如果不使用头文件
 ```c++
