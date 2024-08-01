@@ -55,23 +55,24 @@ sizeof(num): 4
 声明与定义分开
 ```c++
 // tmp.h
-extern int val;
+extern int val; // 声明
+extern const int val_cons; // 声明
 void func();
 
 // tmp.cpp
 #include <iostream>
 #include "tmp.h"
 
-int val = 10;
+extern int val = 10; // 定义
+extern const int val_cons = 20; // 定义
 void func() {
     std::cout << val << std::endl;
+	std::cout << val_cons << std::endl;
 }
 
 // Main.cpp
 #include <iostream>
 #include "tmp.h"
-
-extern int val;
 
 int main() {
     func();
