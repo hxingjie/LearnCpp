@@ -768,3 +768,56 @@ int main() {
 	return 0;
 }
 ``` 
+
+## 84.追踪内存分配
+```c++
+#include <iostream>
+#include <memory>
+
+class AllocationMatrics {
+public:
+    uint32_t TotalAllocated = 0;
+    uint32_t TotalFreed = 0;
+    uint32_t CurrentUsage() {
+        return TotalAllocated - TotalFreed;
+    }
+};
+static AllocationMatrics s_AllocationMatrics;
+void PrintUsage() {
+    std::cout << s_AllocationMatrics.CurrentUsage() << std::endl;
+}
+
+void* operator new(size_t size) {
+    s_AllocationMatrics.TotalAllocated += size;
+    return malloc(size);
+}
+
+void operator delete(void* memory, size_t size) {
+    s_AllocationMatrics.TotalFreed += size;
+    free(memory);
+}
+
+struct Object {
+public:
+    int x, y, z;
+};
+
+int main() {
+    PrintUsage();
+    std::string str = "hello, world.";
+    PrintUsage();
+
+    {
+        std::unique_ptr<Object> uptr = std::make_unique<Object>();
+        PrintUsage();
+    }
+    PrintUsage();
+
+    Object* obj = new Object;
+    PrintUsage();
+    delete obj;
+    PrintUsage();
+
+    return 0;
+}
+```
