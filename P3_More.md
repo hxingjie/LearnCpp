@@ -396,6 +396,30 @@ int main() {
 ```c++
 #include <iostream>
 #include <vector>
+#include <functional>
+
+void PrintNums(std::vector<int>& values, const std::function<float(int, int)>& func) {
+	for (int i = 1; i < values.size(); ++i) {
+		func(values[i - 1], values[i]);
+	}
+}
+
+float Print(int n1, int n2) {
+	int ans = n1 > n2 ? n1 : n2;
+	std::cout << "Max Val is " << ans << std::endl;
+	return ans;
+}
+
+int main() {
+	std::vector<int> nums{ 1, 4, 3, 5 };
+	PrintNums(nums, Print);
+
+    return 0;
+}
+```
+```c++
+#include <iostream>
+#include <vector>
 
 int main() {
 	std::vector<int> values{ 1, 5, 4, 2, 3 };
