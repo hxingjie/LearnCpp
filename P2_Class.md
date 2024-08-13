@@ -273,6 +273,37 @@ destruct Tmp tmp
 */
 ```
 
+## 赋值拷贝函数
+```c++
+#include <iostream>
+struct Tmp {
+	int n;
+	Tmp() : n(0) {
+		std::cout << "Construct" << std::endl;
+	}
+	~Tmp() {
+		std::cout << "Destruct" << std::endl;
+	}
+	Tmp(const Tmp &other) {
+		n = other.n;
+		std::cout << "Copy Construct" << std::endl;
+	}
+	Tmp& operator= (const Tmp& other) {
+		n = other.n;
+		std::cout << "= Construct" << std::endl;
+		return *this;
+	}
+};
+
+int main() {
+	Tmp t1; // "Construct"
+	Tmp t2 = t1; // "Copy Construct"
+	Tmp t3; // "Construct"
+	t3 = t1; // "= Construct"
+    return 0;
+}
+```
+
 ## 继承
 ```c++
 #include <iostream>
