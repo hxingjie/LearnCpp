@@ -509,6 +509,55 @@ public: 类内部，子类内部，类外部
 ## explicit
 不允许隐式转换调用构造函数
 
+## 友元函数
+```c++
+// A.h
+#pragma once
+#include "B.h"
+#include <iostream>
+class A
+{
+	friend void B::FuncB(A &a);
+private:
+	int val;
+public:
+	A() : val(0) {}
+	inline void Print() {
+		std::cout << val << std::endl;
+	}
+	void Print1();
+};
+```
+```c++
+// A.cpp
+#include "A.h"
+
+void A::Print1() {
+	std::cout << val << std::endl;
+}
+```
+```c++
+// B.h
+#pragma once
+
+class A;
+class B
+{
+public:
+	void FuncB(A &a);
+};
+```
+```c++
+// B.cpp
+#include "B.h"
+#include "A.h"
+
+void B::FuncB(A &a) {
+	a.val += 1;
+	
+}
+```
+
 ## 操作符，操作符重载
 ```c++
 #include <iostream>
