@@ -399,6 +399,7 @@ int main() {
 class Entity {
 public:
 	static int x, y; // 表示该变量属于类，而不属于实例
+	static const double sPI; // 静态常量
 	static void Print() { // 表示该方法属于类，而不属于实例
 		// static 方法不包含 this 指针，所以不能访问到非静态变量
 		std::cout << x << ", " << y << std::endl;
@@ -406,6 +407,7 @@ public:
 };
 int Entity::x; // 必须声明或赋值
 int Entity::y = 20;
+const double Entity::sPI = 3.14;
 int main() {
 	Entity::x = 10;
 	//Entity::y = 20;
