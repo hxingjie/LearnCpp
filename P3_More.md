@@ -51,6 +51,8 @@ int main() {
     unique_ptr<int> uq2(uq); // false
     unique_ptr<int> uq3 = make_unique<int>();
     uq3 = uq; // false
+    uq3.reset();
+
 
     shared_ptr<int> sq = make_shared<int>(10);
     shared_ptr<int> sq1 = sq;
