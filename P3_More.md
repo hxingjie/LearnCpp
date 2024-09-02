@@ -51,15 +51,27 @@ int main() {
     unique_ptr<int> uq2(uq); // false
     unique_ptr<int> uq3 = make_unique<int>();
     uq3 = uq; // false
-    uq3.reset();
-    uq3.use_count();
-    uq3.unique();
+
+    uq3.reset(); // 释放指向的对象，uq3置为空
+    uq3 = nullptr;
+    uq3.release(); // 放弃控制权，返回指针，uq3置为空
+
+    // 转移控制权
+    unique_ptr<int> uq = make_unique<int>(10);
+    unique_ptr<int> uq1(uq.release());
+    unique_ptr<int> uq1 = make_unique<int>(20);
+    uq1.reset(uq.release());
 
     shared_ptr<int> sq = make_shared<int>(10);
     shared_ptr<int> sq1 = sq;
     shared_ptr<int> sq2(sq);
     shared_ptr<int> sq3 = make_shared<int>();
     sq3 = sq;
+
+    sq3.reset();
+    sq3 = nullptr;
+    sq3.use_count();
+    sq3.unique();
 
     return 0;
 }
