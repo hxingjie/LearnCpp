@@ -39,6 +39,29 @@ int main() {
 
 ## 智能指针
 
+### smart ptr
+```c++
+#include <iostream>
+#include <memory>
+using namespace std;
+
+int main() {
+    unique_ptr<int> uq = make_unique<int>(10);
+    unique_ptr<int> uq1 = uq; // false
+    unique_ptr<int> uq2(uq); // false
+    unique_ptr<int> uq3 = make_unique<int>();
+    uq3 = uq; // false
+
+    shared_ptr<int> sq = make_shared<int>(10);
+    shared_ptr<int> sq1 = sq;
+    shared_ptr<int> sq2(sq);
+    shared_ptr<int> sq3 = make_shared<int>();
+    sq3 = sq;
+
+    return 0;
+}
+```
+
 ### unique_ptr
 作用域指针，不可复制，唯一
 ```c++
