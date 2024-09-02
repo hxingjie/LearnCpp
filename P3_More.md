@@ -52,7 +52,8 @@ int main() {
     unique_ptr<int> uq3 = make_unique<int>();
     uq3 = uq; // false
     uq3.reset();
-
+    uq3.use_count();
+    uq3.unique();
 
     shared_ptr<int> sq = make_shared<int>(10);
     shared_ptr<int> sq1 = sq;
