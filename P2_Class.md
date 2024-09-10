@@ -603,3 +603,51 @@ int main() {
 	return 0;
 }
 ```
+
+## 移动构造函数，移动赋值函数
+```c++
+#include <iostream>
+
+class Point {
+public:
+	int* p_data;
+	Point(int a) : p_data(new int(a)) {
+		std::cout << "construct func" << std::endl;
+	}
+	Point(Point &&other) noexcept {
+		if (this != &other) {
+			std::cout << "move construct func" << std::endl;
+			p_data = other.p_data;
+			other.p_data = nullptr;
+		}
+	}
+	Point& operator=(Point &&other) noexcept {
+		if (this != &other) {
+			std::cout << "move = func" << std::endl;
+			delete p_data;
+			p_data = other.p_data;
+			other.p_data = nullptr;
+		}
+		return *this;
+	}
+};
+
+int main() {
+    Point p1(12); // 构造函数
+    Point p2 = Point(15); // 构造函数，移动构造函数
+	*p1.p_data = 100;
+	*p2.p_data = 200;
+	Point p3(20); // 构造函数
+	p3 = Point(25); // 构造函数，移动赋值函数
+
+	Point p4_t(12); // 构造函数
+	Point p4 = std::move(p4_t); // 移动构造函数
+
+	Point p5_t(12); // 构造函数
+	Point p5(50); // 构造函数
+	p5 = std::move(p5_t); // 移动赋值函数
+
+    return 0;
+}
+```
+g++ -fno-elide-constructors Main.cpp
